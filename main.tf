@@ -14,7 +14,6 @@ resource "aws_security_group" "this" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ssh" {
-  # for_each = toset(var.cidr_whitelist)
   for_each = toset([for cidr in var.cidr_whitelist : cidr if var.allow_ssh])
 
   security_group_id = aws_security_group.this.id
