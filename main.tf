@@ -14,7 +14,8 @@ resource "aws_security_group" "this" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ssh" {
-  for_each = toset(var.cidr_whitelist)
+  # for_each = toset(var.cidr_whitelist)
+  for_each = toset([for cidr in var.cidr_whitelist : cidr if var.allow_ssh])
 
   security_group_id = aws_security_group.this.id
 
@@ -47,7 +48,7 @@ resource "aws_vpc_security_group_ingress_rule" "https" {
 }
 
 locals {
-  extra_ingress_rules = flatten([for rule in var.extra_ingress_rules : [for cidr in var.cidr_whitelist : {
+  extra_whitelisted_ingress_rules = flatten([for rule in var.extra_whitelisted_ingress_rules : [for cidr in var.cidr_whitelist : {
     from_port   = rule.from_port
     to_port     = rule.to_port
     ip_protocol = rule.ip_protocol
@@ -55,8 +56,8 @@ locals {
   }]])
 }
 
-resource "aws_vpc_security_group_ingress_rule" "extra" {
-  for_each = { for rule in local.extra_ingress_rules : rule.cidr_ipv4 => rule }
+resource "aws_vpc_security_group_ingress_rule" "extra_whitelisted_ipv4" {
+  for_each = { for rule in local.extra_whitelisted_ingress_rules : rule.cidr_ipv4 => rule }
 
   security_group_id = aws_security_group.this.id
 
@@ -66,13 +67,31 @@ resource "aws_vpc_security_group_ingress_rule" "extra" {
   cidr_ipv4   = each.value.cidr_ipv4
 }
 
-resource "aws_vpc_security_group_egress_rule" "open" {
+resource "aws_vpc_security_group_ingress_rule" "extra_ipv4" {
+  for_each = { for rule in var.extra_ingress_rules : sha256("${rule.ip_protocol}${rule.from_port}${rule.to_port}${rule.cidr_ipv4}") => rule }
+
+  security_group_id = aws_security_group.this.id
+
+  ip_protocol = each.value.ip_protocol
+  from_port   = each.value.from_port
+  to_port     = each.value.to_port
+  cidr_ipv4   = each.value.cidr_ipv4
+}
+
+resource "aws_vpc_security_group_egress_rule" "open_ipv4" {
   security_group_id = aws_security_group.this.id
   ip_protocol       = "-1"
   from_port         = "-1"
   to_port           = "-1"
   cidr_ipv4         = "0.0.0.0/0"
-  # cidr_ipv6         = "::/0"
+}
+
+resource "aws_vpc_security_group_egress_rule" "open_ipv6" {
+  security_group_id = aws_security_group.this.id
+  ip_protocol       = "-1"
+  from_port         = "-1"
+  to_port           = "-1"
+  cidr_ipv6         = "::/0"
 }
 
 module "ec2_keypair" {

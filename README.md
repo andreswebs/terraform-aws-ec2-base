@@ -34,9 +34,11 @@ module "ec2_base" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_allow_ssh"></a> [allow\_ssh](#input\_allow\_ssh) | n/a | `bool` | `true` | no |
 | <a name="input_allow_web_traffic"></a> [allow\_web\_traffic](#input\_allow\_web\_traffic) | n/a | `bool` | `false` | no |
 | <a name="input_cidr_whitelist"></a> [cidr\_whitelist](#input\_cidr\_whitelist) | n/a | `list(string)` | n/a | yes |
-| <a name="input_extra_ingress_rules"></a> [extra\_ingress\_rules](#input\_extra\_ingress\_rules) | n/a | <pre>list(object({<br>    from_port   = string<br>    to_port     = string<br>    ip_protocol = optional(string, "tcp")<br>  }))</pre> | `[]` | no |
+| <a name="input_extra_ingress_rules"></a> [extra\_ingress\_rules](#input\_extra\_ingress\_rules) | n/a | <pre>list(object({<br>    ip_protocol = optional(string, "tcp")<br>    from_port   = string<br>    to_port     = string<br>    cidr_ipv4   = string<br>  }))</pre> | `[]` | no |
+| <a name="input_extra_whitelisted_ingress_rules"></a> [extra\_whitelisted\_ingress\_rules](#input\_extra\_whitelisted\_ingress\_rules) | n/a | <pre>list(object({<br>    ip_protocol = optional(string, "tcp")<br>    from_port   = string<br>    to_port     = string<br>  }))</pre> | `[]` | no |
 | <a name="input_name"></a> [name](#input\_name) | n/a | `string` | n/a | yes |
 | <a name="input_ssh_key_name"></a> [ssh\_key\_name](#input\_ssh\_key\_name) | n/a | `string` | `""` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | n/a | `string` | n/a | yes |
@@ -77,8 +79,10 @@ module "ec2_base" {
 |------|------|
 | [aws_iam_role_policy.s3_requisites_for_ssm](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
 | [aws_security_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
-| [aws_vpc_security_group_egress_rule.open](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule) | resource |
-| [aws_vpc_security_group_ingress_rule.extra](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
+| [aws_vpc_security_group_egress_rule.open_ipv4](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule) | resource |
+| [aws_vpc_security_group_egress_rule.open_ipv6](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule) | resource |
+| [aws_vpc_security_group_ingress_rule.extra_ipv4](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
+| [aws_vpc_security_group_ingress_rule.extra_whitelisted_ipv4](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
 | [aws_vpc_security_group_ingress_rule.http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
 | [aws_vpc_security_group_ingress_rule.https](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
 | [aws_vpc_security_group_ingress_rule.ssh](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
