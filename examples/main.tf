@@ -6,7 +6,7 @@ module "ec2_base" {
 
   allow_web_traffic = true
 
-  extra_ingress_rules = [
+  extra_whitelisted_ingress_rules = [
     {
       from_port = "6443"
       to_port   = "6443"
