@@ -56,7 +56,7 @@ locals {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "extra_whitelisted_ipv4" {
-  for_each = { for rule in local.extra_whitelisted_ingress_rules : rule.cidr_ipv4 => rule }
+  for_each = { for rule in local.extra_whitelisted_ingress_rules : sha256("${rule.ip_protocol}${rule.from_port}${rule.to_port}${rule.cidr_ipv4}") => rule }
 
   security_group_id = aws_security_group.this.id
 
