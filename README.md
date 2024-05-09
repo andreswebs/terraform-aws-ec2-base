@@ -36,7 +36,7 @@ module "ec2_base" {
 |------|-------------|------|---------|:--------:|
 | <a name="input_allow_ssh"></a> [allow\_ssh](#input\_allow\_ssh) | n/a | `bool` | `true` | no |
 | <a name="input_allow_web_traffic"></a> [allow\_web\_traffic](#input\_allow\_web\_traffic) | n/a | `bool` | `false` | no |
-| <a name="input_cidr_whitelist"></a> [cidr\_whitelist](#input\_cidr\_whitelist) | n/a | `list(string)` | n/a | yes |
+| <a name="input_cidr_whitelist"></a> [cidr\_whitelist](#input\_cidr\_whitelist) | n/a | `list(string)` | `[]` | no |
 | <a name="input_extra_ingress_rules"></a> [extra\_ingress\_rules](#input\_extra\_ingress\_rules) | n/a | <pre>list(object({<br>    ip_protocol = optional(string, "tcp")<br>    from_port   = string<br>    to_port     = string<br>    cidr_ipv4   = string<br>  }))</pre> | `[]` | no |
 | <a name="input_extra_whitelisted_ingress_rules"></a> [extra\_whitelisted\_ingress\_rules](#input\_extra\_whitelisted\_ingress\_rules) | n/a | <pre>list(object({<br>    ip_protocol = optional(string, "tcp")<br>    from_port   = string<br>    to_port     = string<br>  }))</pre> | `[]` | no |
 | <a name="input_name"></a> [name](#input\_name) | n/a | `string` | n/a | yes |

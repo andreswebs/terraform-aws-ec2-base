@@ -12,7 +12,8 @@ variable "ssh_key_name" {
 }
 
 variable "cidr_whitelist" {
-  type = list(string)
+  type    = list(string)
+  default = []
 }
 
 variable "extra_whitelisted_ingress_rules" {
