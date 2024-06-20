@@ -1,5 +1,5 @@
 output "key_pair" {
-  value = module.ec2_keypair.key_pair
+  value = var.create_ssh_key ? module.ec2_keypair[0].key_pair : null
 }
 
 output "instance_role" {

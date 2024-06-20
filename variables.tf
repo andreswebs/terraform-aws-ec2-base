@@ -8,10 +8,15 @@ variable "vpc_id" {
 
 variable "ssh_key_name" {
   type    = string
-  default = ""
+  default = null
 }
 
-variable "cidr_whitelist" {
+variable "create_ssh_key" {
+  type    = bool
+  default = false
+}
+
+variable "cidr_whitelist_ipv4" {
   type    = list(string)
   default = []
 }
@@ -44,5 +49,5 @@ variable "allow_web_traffic" {
 
 variable "allow_ssh" {
   type    = bool
-  default = true
+  default = false
 }

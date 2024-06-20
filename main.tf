@@ -1,5 +1,5 @@
 locals {
-  ssh_key_name = var.ssh_key_name != "" ? var.ssh_key_name : "${var.name}-ssh"
+  ssh_key_name = var.ssh_key_name != "" && var.ssh_key_name != "" ? var.ssh_key_name : "${var.name}-ssh"
 }
 
 resource "aws_security_group" "this" {
@@ -14,7 +14,7 @@ resource "aws_security_group" "this" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ssh" {
-  for_each = toset([for cidr in var.cidr_whitelist : cidr if var.allow_ssh])
+  for_each = toset([for cidr in var.cidr_whitelist_ipv4 : cidr if var.allow_ssh])
 
   security_group_id = aws_security_group.this.id
 
@@ -47,7 +47,7 @@ resource "aws_vpc_security_group_ingress_rule" "https" {
 }
 
 locals {
-  extra_whitelisted_ingress_rules = flatten([for rule in var.extra_whitelisted_ingress_rules : [for cidr in var.cidr_whitelist : {
+  extra_whitelisted_ingress_rules = flatten([for rule in var.extra_whitelisted_ingress_rules : [for cidr in var.cidr_whitelist_ipv4 : {
     from_port   = rule.from_port
     to_port     = rule.to_port
     ip_protocol = rule.ip_protocol
@@ -94,6 +94,7 @@ resource "aws_vpc_security_group_egress_rule" "open_ipv6" {
 }
 
 module "ec2_keypair" {
+  count              = var.create_ssh_key ? 1 : 0
   source             = "andreswebs/insecure-ec2-key-pair/aws"
   version            = "1.0.0"
   key_name           = local.ssh_key_name
