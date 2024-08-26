@@ -33,16 +33,17 @@ variable "extra_whitelisted_ingress_rules_ipv4" {
 
 variable "extra_ingress_rules_ipv4" {
   type = list(object({
-    ip_protocol = optional(string, "tcp")
-    from_port   = string
-    to_port     = string
-    cidr_ipv4   = string
+    ip_protocol                  = optional(string, "tcp")
+    from_port                    = string
+    to_port                      = string
+    cidr_ipv4                    = optional(string)
+    referenced_security_group_id = optional(string)
   }))
 
   default = []
 }
 
-variable "allow_web_traffic" {
+variable "allow_public_web_traffic" {
   type    = bool
   default = false
 }

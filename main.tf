@@ -25,7 +25,7 @@ resource "aws_vpc_security_group_ingress_rule" "ssh" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "http" {
-  count = var.allow_web_traffic ? 1 : 0
+  count = var.allow_public_web_traffic ? 1 : 0
 
   security_group_id = aws_security_group.this.id
 
@@ -36,7 +36,7 @@ resource "aws_vpc_security_group_ingress_rule" "http" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "https" {
-  count = var.allow_web_traffic ? 1 : 0
+  count = var.allow_public_web_traffic ? 1 : 0
 
   security_group_id = aws_security_group.this.id
 
@@ -71,10 +71,11 @@ resource "aws_vpc_security_group_ingress_rule" "extra_ipv4" {
 
   security_group_id = aws_security_group.this.id
 
-  ip_protocol = each.value.ip_protocol
-  from_port   = each.value.from_port
-  to_port     = each.value.to_port
-  cidr_ipv4   = each.value.cidr_ipv4
+  ip_protocol                  = each.value.ip_protocol
+  from_port                    = each.value.from_port
+  to_port                      = each.value.to_port
+  cidr_ipv4                    = each.value.cidr_ipv4
+  referenced_security_group_id = each.value.referenced_security_group_id
 }
 
 resource "aws_vpc_security_group_egress_rule" "open_ipv4" {
