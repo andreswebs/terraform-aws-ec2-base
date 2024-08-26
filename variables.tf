@@ -21,7 +21,7 @@ variable "cidr_whitelist_ipv4" {
   default = []
 }
 
-variable "extra_whitelisted_ingress_rules" {
+variable "extra_whitelisted_ingress_rules_ipv4" {
   type = list(object({
     ip_protocol = optional(string, "tcp")
     from_port   = string
@@ -31,7 +31,7 @@ variable "extra_whitelisted_ingress_rules" {
   default = []
 }
 
-variable "extra_ingress_rules" {
+variable "extra_ingress_rules_ipv4" {
   type = list(object({
     ip_protocol = optional(string, "tcp")
     from_port   = string

@@ -1,5 +1,5 @@
 locals {
-  ssh_key_name = var.ssh_key_name != "" && var.ssh_key_name != "" ? var.ssh_key_name : "${var.name}-ssh"
+  ssh_key_name = var.ssh_key_name != "" && var.ssh_key_name != null ? var.ssh_key_name : "${var.name}-ssh"
 }
 
 resource "aws_security_group" "this" {
@@ -47,7 +47,7 @@ resource "aws_vpc_security_group_ingress_rule" "https" {
 }
 
 locals {
-  extra_whitelisted_ingress_rules = flatten([for rule in var.extra_whitelisted_ingress_rules : [for cidr in var.cidr_whitelist_ipv4 : {
+  extra_whitelisted_ingress_rules_ipv4 = flatten([for rule in var.extra_whitelisted_ingress_rules_ipv4 : [for cidr in var.cidr_whitelist_ipv4 : {
     from_port   = rule.from_port
     to_port     = rule.to_port
     ip_protocol = rule.ip_protocol
@@ -56,7 +56,7 @@ locals {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "extra_whitelisted_ipv4" {
-  for_each = { for rule in local.extra_whitelisted_ingress_rules : sha256("${rule.ip_protocol}${rule.from_port}${rule.to_port}${rule.cidr_ipv4}") => rule }
+  for_each = { for rule in local.extra_whitelisted_ingress_rules_ipv4 : sha256("${rule.ip_protocol}${rule.from_port}${rule.to_port}${rule.cidr_ipv4}") => rule }
 
   security_group_id = aws_security_group.this.id
 
@@ -67,7 +67,7 @@ resource "aws_vpc_security_group_ingress_rule" "extra_whitelisted_ipv4" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "extra_ipv4" {
-  for_each = { for rule in var.extra_ingress_rules : sha256("${rule.ip_protocol}${rule.from_port}${rule.to_port}${rule.cidr_ipv4}") => rule }
+  for_each = { for rule in var.extra_ingress_rules_ipv4 : sha256("${rule.ip_protocol}${rule.from_port}${rule.to_port}${rule.cidr_ipv4}") => rule }
 
   security_group_id = aws_security_group.this.id
 
