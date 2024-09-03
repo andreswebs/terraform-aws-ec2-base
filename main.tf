@@ -97,7 +97,7 @@ resource "aws_vpc_security_group_egress_rule" "open_ipv6" {
 module "ec2_keypair" {
   count              = var.create_ssh_key ? 1 : 0
   source             = "andreswebs/insecure-ec2-key-pair/aws"
-  version            = "1.0.0"
+  version            = "1.1.0"
   key_name           = local.ssh_key_name
   ssm_parameter_name = "/${var.name}/ssh-key"
 }
