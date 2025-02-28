@@ -49,8 +49,8 @@ module "ec2_base" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ec2_keypair"></a> [ec2\_keypair](#module\_ec2\_keypair) | andreswebs/insecure-ec2-key-pair/aws | 1.1.0 |
-| <a name="module_ec2_role"></a> [ec2\_role](#module\_ec2\_role) | andreswebs/ec2-role/aws | 1.1.0 |
+| <a name="module_ec2_keypair"></a> [ec2\_keypair](#module\_ec2\_keypair) | andreswebs/insecure-ec2-key-pair/aws | 1.2.0 |
+| <a name="module_ec2_role"></a> [ec2\_role](#module\_ec2\_role) | andreswebs/ec2-role/aws | 1.2.0 |
 | <a name="module_s3_requisites_for_ssm"></a> [s3\_requisites\_for\_ssm](#module\_s3\_requisites\_for\_ssm) | andreswebs/s3-requisites-for-ssm-policy-document/aws | 1.1.0 |
 
 ## Outputs
@@ -88,6 +88,7 @@ module "ec2_base" {
 | [aws_vpc_security_group_ingress_rule.http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
 | [aws_vpc_security_group_ingress_rule.https](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
 | [aws_vpc_security_group_ingress_rule.ssh](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
+| [aws_partition.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/partition) | data source |
 
 [//]: # (END_TF_DOCS)
 
