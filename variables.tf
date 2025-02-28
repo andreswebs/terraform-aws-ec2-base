@@ -52,3 +52,8 @@ variable "allow_ssh" {
   type    = bool
   default = false
 }
+
+variable "tags" {
+  type    = map(string)
+  default = {}
+}

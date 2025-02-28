@@ -38,10 +38,11 @@ module "ec2_base" {
 | <a name="input_allow_ssh"></a> [allow\_ssh](#input\_allow\_ssh) | n/a | `bool` | `false` | no |
 | <a name="input_cidr_whitelist_ipv4"></a> [cidr\_whitelist\_ipv4](#input\_cidr\_whitelist\_ipv4) | n/a | `list(string)` | `[]` | no |
 | <a name="input_create_ssh_key"></a> [create\_ssh\_key](#input\_create\_ssh\_key) | n/a | `bool` | `false` | no |
-| <a name="input_extra_ingress_rules_ipv4"></a> [extra\_ingress\_rules\_ipv4](#input\_extra\_ingress\_rules\_ipv4) | n/a | <pre>list(object({<br>    ip_protocol                  = optional(string, "tcp")<br>    from_port                    = string<br>    to_port                      = string<br>    cidr_ipv4                    = optional(string)<br>    referenced_security_group_id = optional(string)<br>  }))</pre> | `[]` | no |
-| <a name="input_extra_whitelisted_ingress_rules_ipv4"></a> [extra\_whitelisted\_ingress\_rules\_ipv4](#input\_extra\_whitelisted\_ingress\_rules\_ipv4) | n/a | <pre>list(object({<br>    ip_protocol = optional(string, "tcp")<br>    from_port   = string<br>    to_port     = string<br>  }))</pre> | `[]` | no |
+| <a name="input_extra_ingress_rules_ipv4"></a> [extra\_ingress\_rules\_ipv4](#input\_extra\_ingress\_rules\_ipv4) | n/a | <pre>list(object({<br/>    ip_protocol                  = optional(string, "tcp")<br/>    from_port                    = string<br/>    to_port                      = string<br/>    cidr_ipv4                    = optional(string)<br/>    referenced_security_group_id = optional(string)<br/>  }))</pre> | `[]` | no |
+| <a name="input_extra_whitelisted_ingress_rules_ipv4"></a> [extra\_whitelisted\_ingress\_rules\_ipv4](#input\_extra\_whitelisted\_ingress\_rules\_ipv4) | n/a | <pre>list(object({<br/>    ip_protocol = optional(string, "tcp")<br/>    from_port   = string<br/>    to_port     = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_name"></a> [name](#input\_name) | n/a | `string` | n/a | yes |
 | <a name="input_ssh_key_name"></a> [ssh\_key\_name](#input\_ssh\_key\_name) | n/a | `string` | `null` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(string)` | `{}` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | n/a | `string` | n/a | yes |
 
 ## Modules

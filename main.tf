@@ -8,9 +8,9 @@ resource "aws_security_group" "this" {
 
   revoke_rules_on_delete = true
 
-  tags = {
+  tags = merge(var.tags, {
     Name = var.name
-  }
+  })
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ssh" {
@@ -22,6 +22,8 @@ resource "aws_vpc_security_group_ingress_rule" "ssh" {
   from_port   = 22
   to_port     = 22
   cidr_ipv4   = each.value
+
+  tags = var.tags
 }
 
 resource "aws_vpc_security_group_ingress_rule" "http" {
@@ -33,6 +35,8 @@ resource "aws_vpc_security_group_ingress_rule" "http" {
   from_port   = 80
   to_port     = 80
   cidr_ipv4   = "0.0.0.0/0"
+
+  tags = var.tags
 }
 
 resource "aws_vpc_security_group_ingress_rule" "https" {
@@ -44,6 +48,8 @@ resource "aws_vpc_security_group_ingress_rule" "https" {
   from_port   = 443
   to_port     = 443
   cidr_ipv4   = "0.0.0.0/0"
+
+  tags = var.tags
 }
 
 locals {
@@ -64,6 +70,8 @@ resource "aws_vpc_security_group_ingress_rule" "extra_whitelisted_ipv4" {
   from_port   = each.value.from_port
   to_port     = each.value.to_port
   cidr_ipv4   = each.value.cidr_ipv4
+
+  tags = var.tags
 }
 
 resource "aws_vpc_security_group_ingress_rule" "extra_ipv4" {
@@ -76,6 +84,8 @@ resource "aws_vpc_security_group_ingress_rule" "extra_ipv4" {
   to_port                      = each.value.to_port
   cidr_ipv4                    = each.value.cidr_ipv4
   referenced_security_group_id = each.value.referenced_security_group_id
+
+  tags = var.tags
 }
 
 resource "aws_vpc_security_group_egress_rule" "open_ipv4" {
@@ -84,6 +94,8 @@ resource "aws_vpc_security_group_egress_rule" "open_ipv4" {
   from_port         = "-1"
   to_port           = "-1"
   cidr_ipv4         = "0.0.0.0/0"
+
+  tags = var.tags
 }
 
 resource "aws_vpc_security_group_egress_rule" "open_ipv6" {
@@ -92,6 +104,8 @@ resource "aws_vpc_security_group_egress_rule" "open_ipv6" {
   from_port         = "-1"
   to_port           = "-1"
   cidr_ipv6         = "::/0"
+
+  tags = var.tags
 }
 
 module "ec2_keypair" {
