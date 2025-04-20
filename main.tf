@@ -129,10 +129,10 @@ module "ec2_keypair" {
 
 module "ec2_role" {
   source       = "andreswebs/ec2-role/aws"
-  version      = "1.2.0"
+  version      = "2.0.0"
   role_name    = var.name
   profile_name = var.name
-  policies = [
+  managed_policy_arns = [
     "${local.managed_policy_arn_prefix}/AmazonSSMManagedInstanceCore",
     "${local.managed_policy_arn_prefix}/CloudWatchAgentServerPolicy",
     "${local.managed_policy_arn_prefix}/AmazonSSMDirectoryServiceAccess"
