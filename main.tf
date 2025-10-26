@@ -110,7 +110,7 @@ resource "aws_vpc_security_group_egress_rule" "open_ipv6" {
 module "ec2_keypair" {
   count              = var.create_ssh_key ? 1 : 0
   source             = "andreswebs/insecure-ec2-key-pair/aws"
-  version            = "1.2.0"
+  version            = "1.3.0"
   key_name           = local.ssh_key_name
   ssm_parameter_name = "/${var.name}/ssh-key"
   tags               = var.tags
@@ -127,7 +127,7 @@ module "ec2_role" {
 
 module "s3_requisites_for_ssm" {
   source  = "andreswebs/s3-requisites-for-ssm-policy-document/aws"
-  version = "1.1.0"
+  version = "1.2.0"
 }
 
 resource "aws_iam_role_policy" "s3_requisites_for_ssm" {
