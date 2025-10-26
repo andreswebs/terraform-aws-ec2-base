@@ -50,7 +50,7 @@ module "ec2_base" {
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_ec2_keypair"></a> [ec2\_keypair](#module\_ec2\_keypair) | andreswebs/insecure-ec2-key-pair/aws | 1.2.0 |
-| <a name="module_ec2_role"></a> [ec2\_role](#module\_ec2\_role) | andreswebs/ec2-role/aws | 2.0.0 |
+| <a name="module_ec2_role"></a> [ec2\_role](#module\_ec2\_role) | andreswebs/ec2-role/aws | 3.0.0 |
 | <a name="module_s3_requisites_for_ssm"></a> [s3\_requisites\_for\_ssm](#module\_s3\_requisites\_for\_ssm) | andreswebs/s3-requisites-for-ssm-policy-document/aws | 1.1.0 |
 
 ## Outputs
@@ -66,14 +66,14 @@ module "ec2_base" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 6.0 |
 
 ## Requirements
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.5 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.11 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 6.0 |
 
 ## Resources
 
@@ -88,7 +88,6 @@ module "ec2_base" {
 | [aws_vpc_security_group_ingress_rule.http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
 | [aws_vpc_security_group_ingress_rule.https](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
 | [aws_vpc_security_group_ingress_rule.ssh](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
-| [aws_partition.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/partition) | data source |
 
 [//]: # (END_TF_DOCS)
 

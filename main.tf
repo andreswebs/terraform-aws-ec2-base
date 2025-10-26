@@ -1,12 +1,3 @@
-data "aws_partition" "current" {}
-
-locals {
-  partition = data.aws_partition.current.partition
-
-  managed_policy_arn_prefix = "arn:${local.partition}:iam::aws:policy"
-}
-
-
 locals {
   ssh_key_name = var.ssh_key_name != "" && var.ssh_key_name != null ? var.ssh_key_name : "${var.name}-ssh"
 }
@@ -103,8 +94,7 @@ resource "aws_vpc_security_group_egress_rule" "open_ipv4" {
   from_port         = "-1"
   to_port           = "-1"
   cidr_ipv4         = "0.0.0.0/0"
-
-  tags = var.tags
+  tags              = var.tags
 }
 
 resource "aws_vpc_security_group_egress_rule" "open_ipv6" {
@@ -123,22 +113,16 @@ module "ec2_keypair" {
   version            = "1.2.0"
   key_name           = local.ssh_key_name
   ssm_parameter_name = "/${var.name}/ssh-key"
-
-  tags = var.tags
+  tags               = var.tags
 }
 
 module "ec2_role" {
-  source       = "andreswebs/ec2-role/aws"
-  version      = "2.0.0"
-  role_name    = var.name
-  profile_name = var.name
-  managed_policy_arns = [
-    "${local.managed_policy_arn_prefix}/AmazonSSMManagedInstanceCore",
-    "${local.managed_policy_arn_prefix}/CloudWatchAgentServerPolicy",
-    "${local.managed_policy_arn_prefix}/AmazonSSMDirectoryServiceAccess"
-  ]
-
-  tags = var.tags
+  source           = "andreswebs/ec2-role/aws"
+  version          = "3.0.0"
+  role_name        = var.name
+  role_description = var.name
+  profile_name     = var.name
+  tags             = var.tags
 }
 
 module "s3_requisites_for_ssm" {
